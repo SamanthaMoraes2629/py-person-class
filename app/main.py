@@ -23,15 +23,18 @@ def create_person_list(people: list) -> list:
     for person in people:
         person_instance = Person.people.get(person["name"])
         # Atribuir wife ou husband, se existirem
-        if "wife" in person and person["wife"]:
-            person_instance.wife = Person.people.get(person["wife"])
-        else:
+        person_instance.wife = Person.people.get(
+            person.get("wife")
+        )  # Usando get() aqui
+        if not person.get("wife"):
             # Se não houver "wife", removemos o atributo
             if hasattr(person_instance, "wife"):
                 del person_instance.wife
-        if "husband" in person and person["husband"]:
-            person_instance.husband = Person.people.get(person["husband"])
-        else:
+
+        person_instance.husband = Person.people.get(
+            person.get("husband")
+        )  # Usando get() aqui
+        if not person.get("husband"):
             # Se não houver "husband", removemos o atributo
             if hasattr(person_instance, "husband"):
                 del person_instance.husband
